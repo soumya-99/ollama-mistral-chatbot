@@ -10,7 +10,7 @@ headers = {
 
 conversation_history = []
 
-def generate_response(prompt):
+def generate_response(prompt: str):
     conversation_history.append(prompt)
 
     full_prompt = "\n".join(conversation_history)
