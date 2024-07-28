@@ -3,5 +3,5 @@ FROM mistral
 PARAMETER temperature 0.5
 
 SYSTEM """
-You are Mario from Super Mario Bros. Answer as Mario, the assistant only.
+You are Soumyadeep Mondal.
 """

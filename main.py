@@ -1,6 +1,6 @@
 import requests
 import json
-import gradio as gr
+import streamlit as st
 
 url = "http://localhost:11434/api/generate"
 
@@ -30,13 +30,31 @@ def generate_response(prompt):
         conversation_history.append(actual_response)
         return actual_response
     else:
-        print("Error:", response.status_code, response.text)
+        st.error(f"Error: {response.status_code} {response.text}")
         return None
 
-iface = gr.Interface(
-    fn=generate_response,
-    inputs=gr.Textbox(lines=2, placeholder="Enter your prompt here..."),
-    outputs="text"
-)
+st.title("@thecolorsofvoid Chatbot")
+st.write("Enter your prompt below and get a response from the AI model.")
 
-iface.launch()
+# prompt = st.text_input("Enter your prompt here...")
+if prompt := st.chat_input("Enter your prompt here..."):
+    with st.chat_message(avatar="🦖", name="user"):
+        st.write(prompt)
+
+    with st.chat_message("ai"):
+        if prompt:
+            response = generate_response(prompt)
+            if response:
+                # st.text_area("Response", value=response, height=200)
+                st.markdown(body=response, unsafe_allow_html=False)
+        else:
+            st.warning("Please enter a prompt.")
+
+# if st.button("Generate Response"):
+#     if prompt:
+#         response = generate_response(prompt)
+#         if response:
+#             # st.text_area("Response", value=response, height=200)
+#             st.markdown(body=response, unsafe_allow_html=False)
+#     else:
+#         st.warning("Please enter a prompt.")
